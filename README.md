@@ -20,6 +20,50 @@
 - `scripts/*.ts`: 起動/停止/デプロイスクリプト
 - `config.json`: AWS・ローカル実行設定（非公開）
 
+## AWS技術構成図（Mermaid）
+以下の構成図は Mermaid 記法で記載しています。
+
+```mermaid
+flowchart LR
+  U[利用者ブラウザ]
+
+  subgraph Local[ローカル環境]
+    LW[ローカルWeb\nlocalhost:5173]
+    LA[ローカルAPI\nlocalhost:8787/random]
+  end
+
+  subgraph AWS[AWS]
+    subgraph H[AWS Amplify Hosting]
+      A[Amplify App / main]
+      S[静的配信 frontend/*]
+      B[Build: amplify.yml\nAPI_PROD_URL -> web_config.json]
+    end
+
+    E[API Gateway または Lambda Function URL\n/random]
+    L[AWS Lambda\nrandom-lottery-api]
+    C[CloudWatch Logs]
+  end
+
+  G[GitHub Repository]
+
+  U -->|ローカル実行| LW
+  LW -->|GET /random| LA
+
+  U -->|HTTPS| S
+  U -->|GET /random| E
+  E --> L
+  L --> C
+
+  G -->|連携| A
+  A --> B
+  B -->|デプロイ| S
+```
+
+補足:
+- ローカル確認時（`npm run local-up`）は、`localhost:5173` の画面から `localhost:8787/random` を呼び出します（どちらも `config.json` で変更可能）。
+- フロントは Amplify Hosting から配信され、抽選APIは `API_PROD_URL` で指定したエンドポイントへアクセスします。
+- `API_PROD_URL` には API Gateway のURL、または Lambda Function URL を設定できます。
+
 ## 設定ファイルの役割
 ### `config.json`（運用者向け / 機密情報あり）
 - AWSリージョン、Amplify/Lambda設定、ローカルポート設定
