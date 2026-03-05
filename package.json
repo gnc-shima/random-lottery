@@ -1,0 +1,23 @@
+{
+  "name": "random-lottery",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:frontend": "npx --yes tsx scripts/build-frontend.ts",
+    "local-up": "npx --yes tsx scripts/local-up.ts",
+    "local-stop": "npx --yes tsx scripts/local-stop.ts",
+    "local-down": "npx --yes tsx scripts/local-down.ts",
+    "hosting-up": "npx --yes tsx scripts/hosting-up.ts",
+    "hosting-down": "npx --yes tsx scripts/hosting-down.ts",
+    "lambda-up": "npx --yes tsx scripts/lambda-up.ts",
+    "lambda-down": "npx --yes tsx scripts/lambda-down.ts",
+    "deploy-up": "npx --yes tsx scripts/deploy-up.ts",
+    "deploy-down": "npx --yes tsx scripts/deploy-down.ts",
+    "typecheck": "npx --yes tsc -p tsconfig.node.json --noEmit && npx --yes tsc -p tsconfig.frontend.json --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.2"
+  }
+}

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#5fa0f0" />
+  <title>抽選</title>
+  <link rel="icon" href="assets/genechma_icon.png">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <img src="assets/logo.png" alt="サービスロゴ" class="cornerLogo" />
+  <div class="audioControls" aria-label="音量コントロール">
+    <button id="btnMute" class="muteBtn" type="button" aria-label="音声をオンにする" aria-pressed="true">🔇</button>
+    <input
+      id="volumeControl"
+      class="volumeControl"
+      type="range"
+      min="0"
+      max="100"
+      step="1"
+      value="40"
+      aria-label="音量"
+    />
+  </div>
+  <audio id="bgmAudio" src="assets/bgm.mp3" preload="auto" loop muted></audio>
+  <audio id="drumrollAudio" src="assets/drumroll_6sec.mp3" preload="auto" muted></audio>
+  <audio id="cheerAudio" src="assets/cheer_2sec.mp3" preload="auto" muted></audio>
+
+  <!-- タイトル -->
+  <h1 id="title" class="title" contenteditable="true" spellcheck="false" aria-label="大会タイトル"></h1>
+
+  <!-- 左: 抽選エリア / 右: 履歴エリア -->
+  <div class="mainLayout">
+    <div class="drawArea">
+      <!-- 入力パネル -->
+      <div class="panel">
+        <label id="minLabel" class="label">
+          <span class="labelText">開始番号</span>
+          <input id="min" type="number" />
+        </label>
+
+        <label id="maxLabel" class="label">
+          <span class="labelText">終了番号</span>
+          <input id="max" type="number" />
+        </label>
+
+        <button id="btnStart" class="btn">抽選スタート！</button>
+      </div>
+
+      <div class="slotRow">
+        <!-- 演出用マスコット -->
+        <div class="mascot" aria-hidden="true">
+          <img id="mascotImage" src="assets/genechma_greeting.png" alt="">
+        </div>
+        <!-- スロット表示 -->
+        <div id="slot" class="slot">???</div>
+      </div>
+      <div id="result" class="result resultHidden"></div>
+    </div>
+    <div class="rightArea">
+      <!-- 履歴 -->
+      <div class="history">
+        <div class="historyHeader">
+          <div id="historyTitle" class="historyTitle">当選履歴</div>
+          <div class="historyNote" id="historyNote"></div>
+        </div>
+        <div id="historyList" class="historyList"></div>
+      </div>
+
+      <div class="exportArea">
+        <!-- 履歴操作 -->
+        <button id="btnClear" class="btn secondary">履歴クリア</button>
+        <button id="btnExport" class="btn secondary">結果を保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    async function loadAppBundle() {
+      let version = "";
+      try {
+        const res = await fetch("./dist/app.version.json", { cache: "no-store" });
+        if (res.ok) {
+          const payload = await res.json();
+          version = String(payload?.version || "").trim();
+        }
+      } catch {
+        // ignore and fallback to plain app.js
+      }
+
+      const src = version ? `./dist/app.js?v=${encodeURIComponent(version)}` : "./dist/app.js";
+      await import(src);
+    }
+
+    loadAppBundle().catch(err => {
+      console.error("app bootstrap failed:", err);
+    });
+  </script>
+</body>
+</html>

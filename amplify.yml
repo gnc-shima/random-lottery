@@ -1,0 +1,19 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install --include=dev
+    build:
+      commands:
+        - cp frontend/web_config.example.json frontend/web_config.json
+        - |
+          node -e "const fs=require('fs'); const p='frontend/web_config.json'; const api=process.env.API_PROD_URL; if(!api){console.error('API_PROD_URL is required'); process.exit(1);} const cfg=JSON.parse(fs.readFileSync(p,'utf8')); cfg.api=cfg.api||{}; cfg.api.prod=api; fs.writeFileSync(p, JSON.stringify(cfg,null,2));"
+        - npm run build:frontend
+  artifacts:
+    # 公開対象を frontend/ にする
+    baseDirectory: frontend
+    files:
+      - '**/*'
+  cache:
+    paths: []

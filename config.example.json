@@ -1,0 +1,26 @@
+{
+  "aws": {
+    "region": "ap-northeast-3"
+  },
+  "local": {
+    "apiPort": 8787,
+    "webPort": 5173
+  },
+  "hosting": {
+    "appId": "",
+    "appName": "random-lottery",
+    "branch": "main",
+    "repository": "https://github.com/your-org/your-repo",
+    "oauthToken": "YOUR_GITHUB_OAUTH_TOKEN",
+    "platform": "WEB",
+    "downConfirm": "DELETE"
+  },
+  "lambda": {
+    "functionName": "random-lottery-api",
+    "executionRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/<LAMBDA_EXECUTION_ROLE>",
+    "runtime": "nodejs22.x",
+    "handler": "backend/lambda/index.handler",
+    "timeout": 10,
+    "memorySize": 128
+  }
+}

@@ -1,0 +1,12 @@
+.run/
+.vscode/
+node_modules/
+config.json
+/frontend/web_config.json
+/frontend/dist/
+.env
+.env.*
+*.log
+*.pem
+*.key
+*.p12

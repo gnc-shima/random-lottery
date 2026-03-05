@@ -1,0 +1,35 @@
+{
+  "appName": "抽選大会",
+  "uiText": {
+    "minLabel": "開始番号",
+    "maxLabel": "終了番号",
+    "startButton": "抽選スタート！",
+    "clearButton": "履歴クリア",
+    "exportJsonButton": "結果出力",
+    "resultPrefix": "🎊 当選番号:",
+    "resultSuffix": "🎊",
+    "historyTitle": "当選履歴",
+    "memoPlaceholder": "商品 当選者 ナンバー",
+    "historyEmptyText": "まだ抽選は行われていません",
+    "deleteHistoryItemButton": "×",
+    "deleteHistoryItemConfirm": "この当選履歴を削除します。よろしいですか？",
+    "rangeError": "最小値・最大値は数値で入力してください",
+    "allNumbersUsedError": "この範囲の番号はすべて当選済みです。履歴をクリアするか範囲を変更してください。",
+    "uniqueWinnerFetchError": "未当選番号を取得できませんでした。再度お試しください。",
+    "apiUrlError": "API接続先が未設定です（本番は API_PROD_URL を設定してください）",
+    "apiErrorPrefix": "APIエラー:",
+    "noResultForExport": "まだ結果がありません。抽選してからエクスポートしてください。"
+  },
+  "minDefault": 1,
+  "maxDefault": 100,
+  "animation": {
+    "spinMs": 6000,
+    "tickMs": 45,
+    "glowOnResultMs": 1500
+  },
+  "history": {
+    "maxItems": 300,
+    "persistToLocalStorage": true,
+    "storageKey": "lottery_history"
+  }
+}
